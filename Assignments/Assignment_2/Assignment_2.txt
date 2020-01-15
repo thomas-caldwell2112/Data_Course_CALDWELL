@@ -1,0 +1,11 @@
+1. wc -l ../../Data/data-shell/data/pdb/m*
+
+2. echo wc -l ../../Data/data-shell/data/pdb/m* > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/m_lines.txt
+
+3. cat ../../Data/data-shell/data/animals.txt | cut -d ',' -f 2 | sort -u > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/unique_animals.txt
+
+4. cat ../../Data/BioLog_Plate_Data.csv | cut -d ',' -f 5 | sed '1d' | sort -u > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/unique_C-substrates.txt
+
+5. wc -l ../../Data/data-shell/data/*.txt | sort | sed '$d' | tail -1
+
+6. find ../../Data/data-shell/many_files/ -type f -exec bash ../../Data/data-shell/scripts/sum_lines.sh {} \; > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/file_sums.txt

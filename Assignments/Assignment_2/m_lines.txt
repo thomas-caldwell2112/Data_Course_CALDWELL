@@ -1,0 +1,1 @@
+wc -l ../../Data/data-shell/data/pdb/m_lines.txt ../../Data/data-shell/data/pdb/maltose.pdb ../../Data/data-shell/data/pdb/menthol.pdb ../../Data/data-shell/data/pdb/methane.pdb ../../Data/data-shell/data/pdb/methanol.pdb ../../Data/data-shell/data/pdb/mint.pdb ../../Data/data-shell/data/pdb/morphine.pdb ../../Data/data-shell/data/pdb/mustard.pdb
