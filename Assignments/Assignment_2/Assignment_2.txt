@@ -1,6 +1,6 @@
 1. wc -l ../../Data/data-shell/data/pdb/m*
 
-2. echo wc -l ../../Data/data-shell/data/pdb/m* > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/m_lines.txt
+2. wc -l ../../Data/data-shell/data/pdb/m* > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/m_lines.txt
 
 3. cat ../../Data/data-shell/data/animals.txt | cut -d ',' -f 2 | sort -u > ../../../Data_Course_CALDWELL/Assignments/Assignment_2/unique_animals.txt
 
