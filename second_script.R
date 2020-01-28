@@ -3,7 +3,6 @@ library(tidyverse)
 data("iris")
 
 glimpse(iris)
-sepal legnthy as a function of pedal length x axis color by sepcies
 
 plot(iris$Petal.Length, iris$Sepal.Length, col = iris$Species, pch = 20)
 
