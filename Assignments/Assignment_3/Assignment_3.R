@@ -22,6 +22,7 @@ names(dat)
 #why are these plots different???
 plot(x=dat$Headwidth..mm., y=dat$Mass)
 plot(x=dat$Size.class, y=dat$Mass)
+# on the second plot your graphing size instead of headwidth and r plot() decided a boxplot would plot it better
 
 
 #check the classes of these vectors
@@ -57,8 +58,9 @@ plot(nums_factor)
 plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
 
 
-?jpeg()
+jpeg("solid.jpeg")
 
+plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
 
 dev.off()
 
@@ -74,23 +76,24 @@ levels(dat$Headwidth) # levels gives all the "options" of a factor you feed it
 
 # FIND WHICH ONES HAVE "41mm"
 
-
+dat$Headwidth[dat$Headwidth == "41mm"]
 
 # CONVERT THOSE TO "41.000"
 
-
+dat$Headwidth[dat$Headwidth == "41mm"] = "41.000"
 
 # DO THE SAME FOR "", BUT CONVERT THOSE TO "NA"
 
-
+dat$Headwidth[dat$Headwidth == ""] = "NA"
 
 # NOW, REMOVE ALL THE ROWS OF "dat" THAT HAVE AN "NA" VALUE
-na.omit(dat)
-
+#na.omit(dat)
+#subset(dat, Headwidth == "NA")
+dat = dat[complete.cases(dat),]
 
 # NOW, CONVERT THAT PESKY "Headwidth" COLUMN INTO A NUMERIC VECTOR WITHIN "dat"
 
-
+dat$Headwidth = as.numeric(as.character(dat$Headwidth))
 
 # LET'S LEARN HOW TO MAKE A DATA FRAME FROM SCRATCH... WE JUST FEED IT VECTORS WITH NAMES!
 
@@ -110,11 +113,11 @@ df1 # look at it...note column names are what we gave it.
 # save it into an object called "dat3"
 
 
-
+dat3 = data.frame(Colony = dat$Colony[1:20], Mass = dat$Mass[1:20])
 
 
 ###### WRITING OUT FILES FROM R #######
-?write.csv()
+write.csv(dat3, file = "CALDWELL_first_file.csv") #not really my first file tho
 
 
 # Write your new object "dat3" to a file named "LASTNAME_first_file.csv" in your PERSONAL git repository
@@ -160,7 +163,10 @@ new_vector
 # SECOND COLUMN WILL BE NAMED "MEAN" AND WILL BE VALUES FROM  new_vector
 
 #fill it in
-size_class_mean_mass = data.frame(...)
+size_class_mean_mass = data.frame(levels = levels(dat$Size.class), MEAN = new_vector)
+
+
+############ YOUR HOMEWORK ASSIGNMENT ##############
 
 
 jpeg("nice.jpeg", units = "in", width = 5, height = 5, res = 3000) # high res :)
@@ -173,7 +179,6 @@ dat2 = dat[dat$Colony == "1" | dat$Colony == "2",]
 
 write.csv(dat2, file = "dat2.csv")
 
-############ YOUR HOMEWORK ASSIGNMENT ##############
 
 # 1.  Make a scatterplot of headwidth vs mass. See if you can get the points to be colored by "Colony"
 
