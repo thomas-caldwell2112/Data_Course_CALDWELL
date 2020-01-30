@@ -84,7 +84,7 @@ dat$Headwidth[dat$Headwidth == "41mm"] = "41.000"
 
 # DO THE SAME FOR "", BUT CONVERT THOSE TO "NA"
 
-dat$Headwidth[dat$Headwidth == ""] = "NA"
+dat$Headwidth[dat$Headwidth == ""] = NA
 
 # NOW, REMOVE ALL THE ROWS OF "dat" THAT HAVE AN "NA" VALUE
 #na.omit(dat)
