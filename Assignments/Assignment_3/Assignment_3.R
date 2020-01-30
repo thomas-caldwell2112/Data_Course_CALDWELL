@@ -91,6 +91,8 @@ dat$Headwidth[dat$Headwidth == ""] = NA
 #subset(dat, Headwidth == "NA")
 dat = dat[complete.cases(dat),]
 
+#levels = unique(dat$headwidth)
+
 # NOW, CONVERT THAT PESKY "Headwidth" COLUMN INTO A NUMERIC VECTOR WITHIN "dat"
 
 dat$Headwidth = as.numeric(as.character(dat$Headwidth))
