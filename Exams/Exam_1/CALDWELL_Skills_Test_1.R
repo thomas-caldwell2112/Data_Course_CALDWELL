@@ -44,13 +44,13 @@ dev.off()
 
 
 #new df with year and ben conc avg
+#Not finished
 concMean = c()
 for(i in levels(as.factor(df$Year_Collected)))
 {
   print(df[as.character(df$Year_Collected) == i,])
 }
 
-mean(df[as.character(df$Year_Collected) == "2010",])
-
 mean(df$DNA_Concentration_Ben)
+
 
