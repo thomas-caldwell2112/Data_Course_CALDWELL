@@ -1,0 +1,20 @@
+1. What other stuff does read.csv() do automatically?
+header = TRUE, sep = ",", quote = "\"", dec = ".", fill = TRUE, comment.char = ""
+
+2. How is it different from read.csv2()?
+csv2 uses a ; as a seperator
+
+3. Why does read.csv2() even exist?
+some files are seperated by ; so csv2 is more convienient then typing sep=";"
+
+4. How could I change the parameters of read.csv() to make it so the class of the “State” column is “character” instead of “factor?”
+stringsAsFactors = FALSE
+
+5. What command would give the summary stats for ONLY the Home.Value column?
+summary(df$Home.Value)
+
+6. What value is returned by the command: names(df)[4] ?
+Home.Value
+
+7. What is happening when you add (. . . col=df$region) to the above plotting code? In other words, what happens when you run: plot(x=df$Year,y=df$Land.Value,col=df$region)
+It colors the plot by region
