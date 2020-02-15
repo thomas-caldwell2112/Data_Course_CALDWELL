@@ -1,4 +1,5 @@
 library(tidyverse)
+library(plotly)
 
 data("iris")
 data("mitcars")
@@ -16,5 +17,17 @@ ggplot(aes(x=Species, y=Mean, fill=Species)) + geom_col()
 iris[iris$Species == "setosa" | iris$Species == "versicolor",] %>%
 ggplot(aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point()
 
-filter(iris, Species != "virginica") %>%
-  ggplot(aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point()
+filter(iris, Species != "virginica") %>% # filter(Species %in% c("csetosa", "versiocolor"))
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point() + geom_smooth(method="lm")
+
+names(mtcars)
+ggplot(mtcars, aes(x=hp, y=mpg, color=factor(cyl))) + 
+  geom_point() + 
+  geom_smooth(inherit.aes = FALSE, method="lm", aes(x=hp, y=mpg)) +
+  labs(x="HORSEPOWERS")
+
+plot_ly(x=mtcars$hp, y=mtcars$mpg, z=mtcars$wt, type="scatter3d", mode="markers")
+
+
+
+
