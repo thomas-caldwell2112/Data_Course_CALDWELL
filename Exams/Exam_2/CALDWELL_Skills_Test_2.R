@@ -35,7 +35,7 @@ dev.off()
 sad2 = data.frame(Continent=character(), Year=character(), Mean=character(), stringsAsFactors=FALSE) 
 
 i = 0
-for(cont in levels(sad$Continent)){
+for(cont in levels(sad$Continent)){ #should have used group_by() and summarize()
   for(year in levels(as.factor(sad$Year))){
     i=i+1
     sad2[i,] = c(cont, year, mean(sad[sad$Continent == cont & sad$Year == year,]$MortalityRate, na.rm = TRUE))
