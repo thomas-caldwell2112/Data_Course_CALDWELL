@@ -1,0 +1,12 @@
+# Browse through those plots and answer the following questions:
+# 1.  Which religious group correlates most strongly in a given area with the proportion of non-religious people?
+# LDS R^2 is .7565
+# 2.  What is the direction of that correlation?
+# Negative
+# 3.  Which religious group has the second stronglest correlation, as above?
+# Episcopal Church R^2 is .3557
+# 4.  What is the direction of THAT correlation?
+# Postive
+# 5.  What can you say about these relationships?
+# The correlation is in areas with more LDS there happens to be more Non_Religious, 
+# and in areas with more Episcopal the Non_Religious is higher

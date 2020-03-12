@@ -237,7 +237,6 @@ mod4mse
 mean(testedresiduals^2)
 
 
-
 df2 <- gather_predictions(mtcars, mod4,mod4_cv)
 
 

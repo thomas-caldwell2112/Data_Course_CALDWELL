@@ -1,0 +1,40 @@
+---
+title: "first markdown"
+author: "Thomas"
+date: "3/10/2020"
+output: html_document
+---
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+
+This is summary data about bio1620 scores:
+
+```{r echo=FALSE}
+df <- read.csv("../../Data_Course/Data/1620_scores.csv")
+glimpse(df)
+```
+
+
+This is exam 1 score dist:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='left'}
+df <- read.csv("../../Data_Course/Data/1620_scores.csv")
+
+ggplot(df, aes(x=Exam.1..4245260.)) + geom_histogram()
+```
+
+
+This is code for exam 1 score dist:
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, fig.align='left', fig.height=1}
+df <- read.csv("../../Data_Course/Data/1620_scores.csv")
+
+ggplot(df, aes(x=Exam.1..4245260.)) + geom_histogram()
+```
+
+**BOLD** text
+
+*italic* text
