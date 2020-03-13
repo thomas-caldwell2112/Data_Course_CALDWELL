@@ -1,0 +1,9 @@
+1. Are any of your predicted response values from your best model scientifically meaningless? Explain.
+
+Yes, if I put a negative nu,ber in it doesnt make sense because you can't suck light out of a plant, and on top of that it make's the growthrate negative which is also impossible.
+
+2. In your plots, did you find any non-linear relationships? If so, do a bit of research online and give a link to at least one resource explaining how to deal with this in R
+
+They seemed to both be linear the ones I tested but I did look into non-linear relationships
+https://data-flair.training/blogs/r-nonlinear-regression/
+Shows a cool way to turn nonlinear into linear
