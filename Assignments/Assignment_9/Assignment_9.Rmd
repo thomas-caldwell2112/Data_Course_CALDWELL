@@ -1,0 +1,73 @@
+---
+title: "Assignment 9"
+author: "Thomas Caldwell"
+date: "4/24/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(modelr)
+library(lindia)
+library(MASS)
+df = read.csv("./Data/GradSchool_Admissions.csv")
+df$admit = as.logical(df$admit)
+```
+
+### Dataset
+
+The dataset we are working with is Graduate School admission data.
+
+```{r Dataframe, echo=TRUE, warning=FALSE}
+colnames(df)
+```
+
+As we can see the data includes wether or not they were admited, their gre score, their gpa, and what rank their school was.
+
+I want to see which specific one is a bigger indicator and then find a model that can most accuratley predict acceptance based on all the factors.
+
+### Exploratory plots
+
+To first see any correlations I'm going to plot the three factors individually to acceptance.
+
+```{r plots, echo=FALSE}
+plot(df$gre, df$admit)
+abline(lm(df$admit~df$gre))
+plot(df$gpa, df$admit)
+abline(lm(df$admit~df$gpa))
+plot(df$rank, df$admit)
+abline(lm(df$admit~df$rank))
+```
+
+From this we can tell that gre an gpa have a positive correlation and rank and a negative but that's because the ranks are highest to lowest.
+
+### Models
+
+All the factors seemed relevant, but to find the best model we will use stepAIC. We will first make a model including all the factors and then run it through to determine the best.
+
+```{r model, echo=TRUE, message=FALSE, warning=FALSE}
+mod = lm(admit ~ gre * gpa * rank ,df)
+step = stepAIC(mod, direction="both")
+```
+
+The selected model:
+
+```{r model anova, echo=TRUE, message=TRUE, warning=FALSE}
+step$call
+step$anova
+```
+
+### Testing the model
+
+### Conclusion
+
+
+
+
+
+
+
+

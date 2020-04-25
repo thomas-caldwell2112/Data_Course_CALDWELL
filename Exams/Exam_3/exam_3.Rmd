@@ -1,0 +1,150 @@
+---
+title: "Exam_3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(GGally)
+library(modelr)
+```
+
+### Data
+
+Our first step is to import the data and clean it up.
+
+```{r data, message=FALSE, warning=FALSE}
+data("mtcars")
+mtcars$gear = factor(mtcars$gear)
+mtcars$vs = factor(mtcars$vs)
+mtcars$am = factor(mtcars$am)
+mtcars$carb = factor(mtcars$carb)
+mtcars$cyl = factor(mtcars$cyl)
+```
+
+### Explore Data
+
+Now we will explore the data and see what correlations there might be.
+
+```{r explore, message=FALSE, warning=FALSE}
+ggpairs(mtcars)
+```
+
+### Models
+
+Based on those graphs we made a few models to be tested.
+
+```{r}
+mod1 = lm(mpg ~ cyl+disp+hp+drat+wt+qsec+vs+am+gear+carb ,mtcars)
+mod2 = lm(mpg ~ cyl + hp + wt + am ,mtcars)
+mod3 = lm(mpg ~ wt + qsec + am ,mtcars)
+```
+
+Now let's summarize them to see how good they are.
+
+```{r}
+summary(mod1)
+summary(mod2)
+summary(mod3)
+```
+
+Then let's diagnose them.
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(2,2)) #to show graphs in 2x2 grids
+plot(mod1)
+plot(mod2)
+plot(mod3)
+```
+
+Based on all that model 2 is looking like the best model.
+
+### Test Model
+
+First we need to make a dataframe with the variables just from mod2.
+
+```{r}
+df = data.frame(cyl = mtcars$cy, hp = mtcars$hp, wt = mtcars$wt, am =mtcars$am, row.names = row.names(mtcars))
+```
+
+Then we will add predictions to the dataframe.
+
+```{r}
+mtcars$pred = predict(mod2, df)
+```
+
+Predictions compared to actual (two seperate visualizations).
+
+```{r}
+ggplot(mtcars, aes(x=row.names(mtcars)))+
+  geom_point(aes(y=mpg, color="mpg"))+
+  geom_point(aes(y=pred, color="pred"))+
+  theme(axis.text.x = element_text(angle = 50, hjust = 1))
+
+ggplot(mtcars, aes(x=pred, y=mpg)) + geom_point()
+```
+
+
+Looks pretty good to me, let's see how the model holds up when we split up the data and test it on seperate sets.
+
+We start by splitting the dataset in half.
+```{r include=FALSE}
+data("mtcars")
+mtcars$gear = factor(mtcars$gear)
+mtcars$vs = factor(mtcars$vs)
+mtcars$am = factor(mtcars$am)
+mtcars$carb = factor(mtcars$carb)
+mtcars$cyl = factor(mtcars$cyl)
+```
+```{r}
+set.seed(666)
+set = caret::createDataPartition(mtcars$mpg, p=.5)
+set = set$Resample1
+train = mtcars[set,]
+test = mtcars[-set,]
+```
+
+Then we will train the model using half of the data set.
+
+```{r}
+mod2_cv = lm(data=train, formula = formula(mod2))
+```
+
+Now with the trained model we will make predictions on the other half of the dataset and add them to it.
+
+```{r}
+test$pred = predict(mod2_cv, test)
+```
+
+Now let's plot the predicted to the actual
+
+```{r}
+ggplot(test,aes(x=row.names(test)))+
+  geom_point(aes(y=mpg, color="mpg"))+
+  geom_point(aes(y=pred, color="pred"))+
+  theme(axis.text.x = element_text(angle = 50, hjust = 1))
+```
+
+Lets compare the residuals and summaries of the trained model to the original.
+
+```{r}
+mean(residuals(mod2)^2)
+mean((test$pred - test$mpg)^2)
+summary(mod2)
+summary(mod2_cv)
+```
+
+Final comparison of the two models.
+
+```{r}
+df = gather_predictions(mtcars, mod2,mod2_cv)
+
+ggplot(df, aes(x=mpg)) +
+  geom_point(aes(y=mpg)) +
+  geom_smooth(method = "lm",aes(linetype=model,y=pred))
+```
+
+### Conclusion
+Model 2 was the best model I was able to come up with, its R^2 value was 0.8659 while the version of model 2 trained for a smaller data set was 0.8787. While the residuals increased it wasn't by too much. The most useful indicator of the best model was the 4 graphs I made of each. Further on I tried to explain the best with graphs but after you have 2 or 3 variables it's hard to visualize on a graph. Training it with just half the dataset is also useful to see if the model will adapt to different data or if it's too specific to the current data.
