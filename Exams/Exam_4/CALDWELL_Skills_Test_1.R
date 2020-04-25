@@ -34,14 +34,7 @@ jpeg(filename="Ben_DNA_over_time.jpg")
 plot(as.POSIXct(dfDown$Date_Collected), dfDown$DNA_Concentration_Ben, xlab="Date_Collected", ylab="DNA_Concentration_Ben")
 dev.off()
 
-#new df with year and ben conc avg
-#Not finished
-concMean = c()
-for(i in levels(as.factor(df$Year_Collected)))
-{
-  print(df[as.character(df$Year_Collected) == i,])
-}
-
-mean(df$DNA_Concentration_Ben)
-
+#6
+df4 = group_by(df, Year_Collected) %>% summarize(DNA_Concentration_Ben_Mean = mean(DNA_Concentration_Ben))
+write.csv(df4, file="Ben_Average_Conc.csv")
 
