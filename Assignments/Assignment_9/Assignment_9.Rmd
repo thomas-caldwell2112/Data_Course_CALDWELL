@@ -13,8 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(modelr)
 library(lindia)
 library(MASS)
+library(GGally)
 df = read.csv("./Data/GradSchool_Admissions.csv")
 df$admit = as.logical(df$admit)
+df$rank = as.factor(df$rank)
 ```
 
 ### Dataset
@@ -40,6 +42,7 @@ plot(df$gpa, df$admit)
 abline(lm(df$admit~df$gpa))
 plot(df$rank, df$admit)
 abline(lm(df$admit~df$rank))
+ggpairs(df)
 ```
 
 From this we can tell that gre an gpa have a positive correlation and rank and a negative but that's because the ranks are highest to lowest.
@@ -49,7 +52,7 @@ From this we can tell that gre an gpa have a positive correlation and rank and a
 All the factors seemed relevant, but to find the best model we will use stepAIC. We will first make a model including all the factors and then run it through to determine the best.
 
 ```{r model, echo=TRUE, message=FALSE, warning=FALSE}
-mod = lm(admit ~ gre * gpa * rank ,df)
+mod = glm(admit ~ gre * gpa * rank , data=df, family=binomial(link="logit"))
 step = stepAIC(mod, direction="both")
 ```
 
@@ -58,13 +61,31 @@ The selected model:
 ```{r model anova, echo=TRUE, message=TRUE, warning=FALSE}
 step$call
 step$anova
+mod = glm(admit ~ gre + gpa + rank + gre:gpa, data=df, family=binomial(link="logit"))
 ```
 
 ### Testing the model
 
+I split the dataframe into two groups and then setup the model with one and had it add predictions to the other. Then it was graphed with all the factors to visualize its usefulness.
+```{r}
+set.seed(666)
+set = caret::createDataPartition(df$admit, p=.5)
+set = set$Resample1
+train = df[set,]
+test = df[-set,]
+mod_cv = lm(data=train, formula = formula(step$call))
+test$pred = predict(mod_cv, test, type = "response")
+
+
+ggplot(test, aes(x = gpa, y = gre, shape = admit))+
+  geom_point(aes(y = gre ,colour = pred))+
+  facet_wrap(~rank)
+```
+  
+
 ### Conclusion
 
-
+From reviewing the final graph it's obvious the model favored school ranking when it decided who was accepted. A model not including the rank of school could have possibly been a better model.
 
 
 
